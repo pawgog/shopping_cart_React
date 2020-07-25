@@ -5,12 +5,19 @@ import {
   ADD_NEW_ITEM,
   EDIT_ITEM,
   DELETE_ITEM,
+  FETCH_CART_SUCCESS,
+  FETCH_CART_ERROR,
+  ADD_TO_CART,
+  DELETE_CART,
+  DELETE_ALL_CART,
 } from '../actions';
 
 const initialState = {
-  pending: false,
+  pending: true,
   items: [],
+  cart: [],
   error: null,
+  errorCart: null,
 };
 
 export default function items(state = initialState, action) {
@@ -34,10 +41,12 @@ export default function items(state = initialState, action) {
       };
     case ADD_NEW_ITEM:
       return {
+        ...state,
         items: [...state.items, action.payload],
       };
     case EDIT_ITEM:
       return {
+        ...state,
         items: [
           ...state.items.map((item) =>
             item.id === action.payload.id
@@ -47,10 +56,34 @@ export default function items(state = initialState, action) {
         ],
       };
     case DELETE_ITEM:
-      console.log(state.items, action.payload);
       return {
         ...state,
         items: state.items.filter((item) => item._id !== action.payload),
+      };
+    case FETCH_CART_SUCCESS:
+      return {
+        ...state,
+        cart: action.payload,
+      };
+    case FETCH_CART_ERROR:
+      return {
+        ...state,
+        errorCart: action.error,
+      };
+    case ADD_TO_CART:
+      return {
+        ...state,
+        cart: [...state.cart, action.payload],
+      };
+    case DELETE_CART:
+      return {
+        ...state,
+        cart: state.cart.filter((item) => item._id !== action.payload),
+      };
+    case DELETE_ALL_CART:
+      return {
+        ...state,
+        cart: state.cart.filter((item) => item.prod_id !== action.payload),
       };
     default:
       return state;

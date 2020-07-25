@@ -123,3 +123,121 @@ function fetchItemsError(error) {
     error: error,
   };
 }
+
+//// Shopping Cart
+export const FETCH_CART_PENDING = 'FETCH_CART_PENDING';
+export const FETCH_CART_SUCCESS = 'FETCH_CART_SUCCESS';
+export const FETCH_CART_ERROR = 'FETCH_CART_ERROR';
+export const ADD_TO_CART = 'ADD_TO_CART';
+export const DELETE_CART = 'DELETE_CART';
+export const DELETE_ALL_CART = 'DELETE_ALL_CART';
+
+export const fetchCart = () => {
+  return (dispatch) => {
+    axios
+      .get('http://localhost:4000/cart')
+      .then((res) => {
+        if (res.error) {
+          throw res.error;
+        }
+        dispatch(fetchCartSuccess(res.data));
+        return res.data;
+      })
+      .catch((err) => {
+        dispatch(fetchCartError(err));
+      });
+  };
+};
+
+function fetchCartSuccess(cart) {
+  return {
+    type: FETCH_CART_SUCCESS,
+    payload: cart,
+  };
+}
+
+function fetchCartError(error) {
+  return {
+    type: FETCH_CART_ERROR,
+    error: error,
+  };
+}
+
+export const addToCart = (cart) => {
+  return (dispatch) => {
+    axios
+      .post('http://localhost:4000/cart', cart)
+      .then((res) => {
+        if (res.error) {
+          throw res.error;
+        }
+        return res.data;
+      })
+      .then((res) => {
+        console.log(res);
+        dispatch(addCartSuccess(res));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
+
+function addCartSuccess(cart) {
+  return {
+    type: ADD_TO_CART,
+    payload: cart,
+  };
+}
+
+export const deleteCart = (id) => {
+  return (dispatch) => {
+    axios
+      .delete('http://localhost:4000/cart/' + id)
+      .then((res) => {
+        if (res.error) {
+          throw res.error;
+        }
+        return res.data;
+      })
+      .then((res) => {
+        dispatch(deleteCartSuccess(id));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
+
+function deleteCartSuccess(id) {
+  return {
+    type: DELETE_CART,
+    payload: id,
+  };
+}
+
+export const deleteAllCart = (id) => {
+  return (dispatch) => {
+    axios
+      .delete('http://localhost:4000/cart/' + id)
+      .then((res) => {
+        if (res.error) {
+          throw res.error;
+        }
+        return res.data;
+      })
+      .then((res) => {
+        dispatch(deleteAllCartSuccess(id));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
+
+function deleteAllCartSuccess(id) {
+  return {
+    type: DELETE_ALL_CART,
+    payload: id,
+  };
+}

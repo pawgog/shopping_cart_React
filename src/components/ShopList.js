@@ -1,8 +1,24 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../actions';
 import { Card, Button } from '@material-ui/core';
 
 const ShopList = ({ items }) => {
-  console.log(items);
+  const dispatch = useDispatch();
+  const addCart = (item) => {
+    const prodToAdd = Object.assign(
+      {},
+      {
+        prod_id: item._id,
+        name: item.name,
+        price: item.price,
+        description: item.description,
+        imageUrl: item.imageUrl,
+      }
+    );
+    dispatch(addToCart(prodToAdd));
+  };
+
   return (
     <div className="dashboard-shoplist">
       <h3>List of Products</h3>
@@ -17,7 +33,9 @@ const ShopList = ({ items }) => {
                   <span>{item.price}$</span>
                 </div>
                 <p>{item.description}</p>
-                <Button variant="outlined">Add to Order</Button>
+                <Button variant="outlined" onClick={() => addCart(item)}>
+                  Add to Order
+                </Button>
               </div>
             </div>
           </Card>

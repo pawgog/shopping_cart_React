@@ -1,25 +1,41 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchItems, addItem, deleteItem } from './actions';
+import { fetchItems, fetchCart, addItem, deleteItem } from './actions';
+import Spinner from './components/Spinner';
+import Error from './components/Error';
 import ShopList from './components/ShopList';
 import ShopCart from './components/ShopCart';
 import Inventory from './components/Inventory';
 
 class Root extends React.Component {
   componentDidMount() {
-    this.props.dispatch(fetchItems());
+    const { dispatch } = this.props;
+    dispatch(fetchItems());
+    dispatch(fetchCart());
   }
 
   render() {
     const { items } = this.props;
-    console.log(items, this.props);
+    // console.log(items, this.props);
 
     return (
-      <div className="dashboard-body">
-        <ShopList items={items.items} />
-        <ShopCart />
-        <Inventory items={items.items} />
-      </div>
+      <>
+        {items.pending ? (
+          <Spinner />
+        ) : (
+          <div className="dashboard-body">
+            {!items.error ? (
+              <>
+                <ShopList items={items.items} />
+                <ShopCart cart={items.cart} />
+                <Inventory items={items.items} />
+              </>
+            ) : (
+              <Error />
+            )}
+          </div>
+        )}
+      </>
     );
   }
 }

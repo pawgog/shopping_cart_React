@@ -9,7 +9,6 @@ import {
   OutlinedInput,
 } from '@material-ui/core';
 
-
 const defaultValues = {
   name: '',
   price: '',
@@ -17,7 +16,7 @@ const defaultValues = {
   description: ' ',
 };
 
-export const DashboardCardForm = () => {
+const DashboardCardForm = () => {
   const dispatch = useDispatch();
   const { handleSubmit, control, reset } = useForm({ defaultValues });
 

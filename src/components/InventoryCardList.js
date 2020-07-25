@@ -1,13 +1,12 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { editItem, deleteItem } from '../actions';
+import { editItem, deleteItem, deleteAllCart } from '../actions';
 import {
   FormControl,
   TextField,
   InputLabel,
   OutlinedInput,
 } from '@material-ui/core';
-
 
 const itemEditValues = {
   name: '',
@@ -16,12 +15,13 @@ const itemEditValues = {
   description: '',
 };
 
-export const DashboardCardList = ({ items }) => {
+const DashboardCardList = ({ items }) => {
   const dispatch = useDispatch();
   const removeItem = (id) => {
     const result = window.confirm('Would you like to delete item?');
     if (result) {
       dispatch(deleteItem(id));
+      dispatch(deleteAllCart(id));
     }
   };
 
@@ -45,14 +45,16 @@ export const DashboardCardList = ({ items }) => {
 
   return (
     <>
-      {items.map((item) => {
+      {items.map((item, index) => {
         return (
           <div key={item._id} className="dashboard-inventory__card">
             <div className="item-title">
               <FormControl variant="outlined" size="small" fullWidth={true}>
-                <InputLabel htmlFor="form-item-title">Product name</InputLabel>
+                <InputLabel htmlFor={`form-item-name-${index}`}>
+                  Product name
+                </InputLabel>
                 <OutlinedInput
-                  id="form-item-title"
+                  id={`form-item-name-${index}`}
                   required
                   onChange={(e) => changeInput(e)}
                   defaultValue={item.name}
@@ -63,9 +65,11 @@ export const DashboardCardList = ({ items }) => {
             </div>
             <div className="item-price">
               <FormControl variant="outlined" size="small" fullWidth={true}>
-                <InputLabel htmlFor="form-item-title">Price</InputLabel>
+                <InputLabel htmlFor={`form-item-price-${index}`}>
+                  Price
+                </InputLabel>
                 <OutlinedInput
-                  id="form-item-title"
+                  id={`form-item-price-${index}`}
                   required
                   onChange={(e) => changeInput(e)}
                   defaultValue={item.price}
@@ -76,9 +80,11 @@ export const DashboardCardList = ({ items }) => {
             </div>
             <div className="item-img-link">
               <FormControl variant="outlined" size="small" fullWidth={true}>
-                <InputLabel htmlFor="form-item-title">Image url</InputLabel>
+                <InputLabel htmlFor={`form-item-imageUrl-${index}`}>
+                  Image url
+                </InputLabel>
                 <OutlinedInput
-                  id="form-item-title"
+                  id={`form-item-imageUrl-${index}`}
                   required
                   onChange={(e) => changeInput(e)}
                   defaultValue={item.imageUrl}
@@ -90,7 +96,7 @@ export const DashboardCardList = ({ items }) => {
             <div className="item-description">
               <FormControl variant="outlined" size="small" fullWidth={true}>
                 <TextField
-                  id="form-item-description"
+                  id={`form-item-description-${index}`}
                   label="Description"
                   required
                   multiline
@@ -123,4 +129,4 @@ export const DashboardCardList = ({ items }) => {
   );
 };
 
-export default DashboardCardList
+export default DashboardCardList;
