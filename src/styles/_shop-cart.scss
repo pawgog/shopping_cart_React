@@ -1,0 +1,52 @@
+.dashboard-shopcart {
+  &__card {
+    display: grid;
+    grid-template-columns: 1fr 1fr 0.3fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 1px 1px;
+    grid-template-areas: 'title-card title-card card-price btn-delete' 'quantity quantity quantity-sum btn-delete';
+    margin: 1rem;
+    padding: 1rem;
+    border-bottom: 1px solid $black;
+
+    & > div {
+      display: grid;
+    }
+
+    .title-card {
+      grid-area: title-card;
+    }
+
+    .quantity {
+      grid-area: quantity;
+    }
+
+    .card-price {
+      grid-area: card-price;
+      justify-content: end;
+    }
+
+    .quantity-sum {
+      grid-area: quantity-sum;
+      justify-content: end;
+    }
+
+    .btn-delete {
+      grid-area: btn-delete;
+      button {
+        margin-left: 0.7rem;
+        margin-right: -1.3rem;
+        min-width: 30px;
+      }
+    }
+  }
+  &__total {
+    display: flex;
+    justify-content: flex-end;
+    margin: 1rem;
+
+    & > span {
+      margin-left: 1rem;
+    }
+  }
+}

@@ -1,0 +1,42 @@
+.dashboard-inventory {
+  &__card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 0.5fr 0.5fr 1fr 0.5fr;
+    gap: 1px 1px;
+    grid-template-areas: 'item-title item-price' 'item-img-link item-img-link' 'item-description item-description' 'btn-invent btn-invent';
+    margin-bottom: 0.5rem;
+    border: 1px solid $black;
+
+    .item-title,
+    .item-price,
+    .item-img-link,
+    .item-description,
+    .btn-invent {
+      margin: 0.2rem;
+      padding: 0.5rem;
+      border: 1px solid $black;
+    }
+
+    .item-title {
+      grid-area: item-title;
+    }
+
+    .item-price {
+      grid-area: item-price;
+    }
+
+    .item-img-link {
+      grid-area: item-img-link;
+    }
+
+    .item-description {
+      grid-area: item-description;
+    }
+
+    .btn-invent {
+      grid-area: btn-invent;
+      text-align: center;
+    }
+  }
+}

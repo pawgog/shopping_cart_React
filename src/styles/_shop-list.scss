@@ -1,0 +1,30 @@
+.dashboard-shoplist {
+  width: 100%;
+  justify-items: center;
+
+  &__cards {
+    margin: 1rem;
+  }
+
+  &__card {
+    display: flex;
+    flex-direction: row;
+    padding: 1rem;
+  }
+
+  &__details {
+    width: 100%;
+    padding: 1rem;
+
+    &__title-item {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      & > h5 {
+        margin: 0;
+      }
+    }
+  }
+}
