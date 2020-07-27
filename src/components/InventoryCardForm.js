@@ -21,9 +21,7 @@ const DashboardCardForm = () => {
   const { handleSubmit, control, reset } = useForm({ defaultValues });
 
   const onSubmitForm = (data) => {
-    reset({
-      defaultValues,
-    });
+    reset({ defaultValues });
     dispatch(addItem(data));
   };
 
@@ -34,10 +32,10 @@ const DashboardCardForm = () => {
     >
       <div className="item-title">
         <FormControl variant="outlined" size="small">
-          <InputLabel htmlFor="form-item-title">Product name</InputLabel>
+          <InputLabel htmlFor="form-item-name">Product name</InputLabel>
           <Controller
             as={OutlinedInput}
-            id="form-item-title"
+            id="form-item-name"
             control={control}
             required
             defaultValue={defaultValues.name}

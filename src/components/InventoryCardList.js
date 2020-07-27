@@ -15,9 +15,9 @@ const itemEditValues = {
   description: '',
 };
 
-const DashboardCardList = ({ items }) => {
+const DashboardCardList = ({ items, fetchItemsAPIFuncChild, fetchCartAPIFuncChild, editCartFuncChild }) => {
   const dispatch = useDispatch();
-  const removeItem = (id) => {
+  const removeItemCart = (id) => {
     const result = window.confirm('Would you like to delete item?');
     if (result) {
       dispatch(deleteItem(id));
@@ -26,17 +26,25 @@ const DashboardCardList = ({ items }) => {
   };
 
   const editItemCart = (data) => {
-    const result = window.confirm('Would you like to update item?');
-    if (result) {
-      Object.keys(itemEditValues).map((key, index) => {
-        return itemEditValues[key] === ''
-          ? (itemEditValues[key] = data[key])
-          : itemEditValues[key];
-      });
-      dispatch(editItem(data._id, itemEditValues));
-    } else {
-      window.location.reload(false);
-    }
+    Object.keys(itemEditValues).map((key, index) => {
+      return itemEditValues[key] === ''
+        ? (itemEditValues[key] = data[key])
+        : itemEditValues[key];
+    });
+    const editItemPromise = new Promise((resolve, reject) => {
+        resolve(dispatch(editItem(data._id, itemEditValues)))
+      })
+      editItemPromise
+    .then(() => {
+      fetchItemsAPIFuncChild()
+    })
+    .then(() => {
+      dispatch(editCartFuncChild(data._id, itemEditValues))
+    })
+    .then(() => {
+      fetchCartAPIFuncChild()
+    })
+    .catch(err => console.log(err.message))
   };
 
   const changeInput = (e) => {
@@ -118,7 +126,7 @@ const DashboardCardList = ({ items }) => {
             <button
               type="button"
               className="btn-remove"
-              onClick={() => removeItem(item._id)}
+              onClick={() => removeItemCart(item._id)}
             >
               Remove Product
             </button>

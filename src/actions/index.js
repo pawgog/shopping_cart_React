@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+const SERVER_URL = 'https://shoping-cart-342.herokuapp.com'
+
 export const FETCH_ITEMS_PENDING = 'FETCH_ITEMS_PENDING';
 export const FETCH_ITEMS_SUCCESS = 'FETCH_ITEMS_SUCCESS';
 export const FETCH_ITEMS_ERROR = 'FETCH_ITEMS_ERROR';
@@ -11,7 +13,7 @@ export const fetchItems = () => {
   return (dispatch) => {
     dispatch(fetchItemsPending());
     axios
-      .get('http://localhost:4000/items')
+      .get(`${SERVER_URL}/items`)
       .then((res) => {
         if (res.error) {
           throw res.error;
@@ -28,7 +30,7 @@ export const fetchItems = () => {
 export const addItem = (item) => {
   return (dispatch) => {
     axios
-      .post('http://localhost:4000/items', item)
+      .post(`${SERVER_URL}/items`, item)
       .then((res) => {
         if (res.error) {
           throw res.error;
@@ -54,7 +56,7 @@ function addItemSuccess(item) {
 export const editItem = (id, item) => {
   return (dispatch) => {
     axios
-      .put(`http://localhost:4000/items/${id}/`, item)
+      .put(`${SERVER_URL}/items/${id}/`, item)
       .then((res) => {
         if (res.error) {
           throw res.error;
@@ -63,7 +65,7 @@ export const editItem = (id, item) => {
       })
       .then((res) => {
         const payloadValue = { id: id, editItem: res };
-        dispatch(editTournamentSuccess(payloadValue));
+        dispatch(editItemSuccess(payloadValue));
       })
       .catch((err) => {
         console.log(err);
@@ -71,17 +73,17 @@ export const editItem = (id, item) => {
   };
 };
 
-function editTournamentSuccess(tour) {
+function editItemSuccess(item) {
   return {
     type: EDIT_ITEM,
-    payload: tour,
+    payload: item,
   };
 }
 
 export const deleteItem = (id) => {
   return (dispatch) => {
     axios
-      .delete('http://localhost:4000/items/' + id)
+      .delete(`${SERVER_URL}/items/${id}`)
       .then((res) => {
         if (res.error) {
           throw res.error;
@@ -129,13 +131,14 @@ export const FETCH_CART_PENDING = 'FETCH_CART_PENDING';
 export const FETCH_CART_SUCCESS = 'FETCH_CART_SUCCESS';
 export const FETCH_CART_ERROR = 'FETCH_CART_ERROR';
 export const ADD_TO_CART = 'ADD_TO_CART';
+export const EDIT_CART = 'EDIT_CART';
 export const DELETE_CART = 'DELETE_CART';
 export const DELETE_ALL_CART = 'DELETE_ALL_CART';
 
 export const fetchCart = () => {
   return (dispatch) => {
     axios
-      .get('http://localhost:4000/cart')
+      .get(`${SERVER_URL}/cart`)
       .then((res) => {
         if (res.error) {
           throw res.error;
@@ -166,7 +169,7 @@ function fetchCartError(error) {
 export const addToCart = (cart) => {
   return (dispatch) => {
     axios
-      .post('http://localhost:4000/cart', cart)
+      .post(`${SERVER_URL}/cart`, cart)
       .then((res) => {
         if (res.error) {
           throw res.error;
@@ -190,10 +193,37 @@ function addCartSuccess(cart) {
   };
 }
 
+export const editCart = (id, cart) => {
+  return (dispatch) => {
+    axios
+      .put(`${SERVER_URL}/cart/${id}/`, cart)
+      .then((res) => {
+        if (res.error) {
+          throw res.error;
+        }
+        return res.data;
+      })
+      .then(() => {
+        const payloadValue = { id: id, editCartPrice: cart };
+        dispatch(editCartSuccess(payloadValue));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
+
+function editCartSuccess(cart) {
+  return {
+    type: EDIT_CART,
+    payload: cart,
+  };
+}
+
 export const deleteCart = (id) => {
   return (dispatch) => {
     axios
-      .delete('http://localhost:4000/cart/' + id)
+      .delete(`${SERVER_URL}/cart/${id}`)
       .then((res) => {
         if (res.error) {
           throw res.error;
@@ -219,7 +249,7 @@ function deleteCartSuccess(id) {
 export const deleteAllCart = (id) => {
   return (dispatch) => {
     axios
-      .delete('http://localhost:4000/cart/' + id)
+      .delete(`${SERVER_URL}/cart/${id}`)
       .then((res) => {
         if (res.error) {
           throw res.error;

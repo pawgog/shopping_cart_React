@@ -3,7 +3,7 @@ import React from 'react';
 function Error() {
   return (
     <>
-      <div className="applicants-error">
+      <div className="dashboard-error">
         <div>Request failed - can not loading data</div>
       </div>
     </>

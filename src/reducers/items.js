@@ -8,6 +8,7 @@ import {
   FETCH_CART_SUCCESS,
   FETCH_CART_ERROR,
   ADD_TO_CART,
+  EDIT_CART,
   DELETE_CART,
   DELETE_ALL_CART,
 } from '../actions';
@@ -74,6 +75,21 @@ export default function items(state = initialState, action) {
       return {
         ...state,
         cart: [...state.cart, action.payload],
+      };
+    case EDIT_CART:
+      return {
+        ...state,
+        cart: [
+          ...state.cart.map((val) => {
+            if(val.prod_id === action.payload.id) {
+              val["name"] = action.payload.editCartPrice.name
+              val["price"] = Number(action.payload.editCartPrice.price)
+              return val
+            } else {
+              return val
+            }
+          })
+        ],
       };
     case DELETE_CART:
       return {

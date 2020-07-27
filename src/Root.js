@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchItems, fetchCart, addItem, deleteItem } from './actions';
+import { fetchItems, fetchCart, editCart, addItem, deleteItem } from './actions';
 import Spinner from './components/Spinner';
 import Error from './components/Error';
 import ShopList from './components/ShopList';
@@ -9,9 +9,16 @@ import Inventory from './components/Inventory';
 
 class Root extends React.Component {
   componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch(fetchItems());
-    dispatch(fetchCart());
+    this.fetchItemsAPI()
+    this.fetchCartAPI()
+  }
+
+  fetchItemsAPI = () => {
+    this.props.dispatch(fetchItems());
+  }
+
+  fetchCartAPI = () => {
+    this.props.dispatch(fetchCart());
   }
 
   render() {
@@ -28,7 +35,7 @@ class Root extends React.Component {
               <>
                 <ShopList items={items.items} />
                 <ShopCart cart={items.cart} />
-                <Inventory items={items.items} />
+                <Inventory items={items.items} fetchItemsAPIFunc={this.fetchItemsAPI} fetchCartAPIFunc={this.fetchCartAPI} editCartFunc={editCart} />
               </>
             ) : (
               <Error />
