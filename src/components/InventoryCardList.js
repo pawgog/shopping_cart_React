@@ -31,20 +31,8 @@ const DashboardCardList = ({ items, fetchItemsAPIFuncChild, fetchCartAPIFuncChil
         ? (itemEditValues[key] = data[key])
         : itemEditValues[key];
     });
-    const editItemPromise = new Promise((resolve, reject) => {
-        resolve(dispatch(editItem(data._id, itemEditValues)))
-      })
-      editItemPromise
-    .then(() => {
-      fetchItemsAPIFuncChild()
-    })
-    .then(() => {
-      dispatch(editCartFuncChild(data._id, itemEditValues))
-    })
-    .then(() => {
-      fetchCartAPIFuncChild()
-    })
-    .catch(err => console.log(err.message))
+    dispatch(editItem(data._id, itemEditValues))
+    dispatch(editCartFuncChild(data._id, itemEditValues))
   };
 
   const changeInput = (e) => {

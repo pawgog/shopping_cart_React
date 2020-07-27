@@ -67,6 +67,12 @@ export const editItem = (id, item) => {
         const payloadValue = { id: id, editItem: res };
         dispatch(editItemSuccess(payloadValue));
       })
+      .then(() => {
+        dispatch(fetchItems())
+      })
+      .then(() => {
+        dispatch(fetchCart())
+      })
       .catch((err) => {
         console.log(err);
       });
@@ -206,6 +212,12 @@ export const editCart = (id, cart) => {
       .then(() => {
         const payloadValue = { id: id, editCartPrice: cart };
         dispatch(editCartSuccess(payloadValue));
+      })
+      .then(() => {
+        dispatch(fetchItems())
+      })
+      .then(() => {
+        dispatch(fetchCart())
       })
       .catch((err) => {
         console.log(err);
