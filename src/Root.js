@@ -23,7 +23,6 @@ class Root extends React.Component {
 
   render() {
     const { items } = this.props;
-    // console.log(items, this.props);
 
     return (
       <>
@@ -35,7 +34,7 @@ class Root extends React.Component {
               <>
                 <ShopList items={items.items} />
                 <ShopCart cart={items.cart} />
-                <Inventory items={items.items} fetchItemsAPIFunc={this.fetchItemsAPI} fetchCartAPIFunc={this.fetchCartAPI} editCartFunc={editCart} />
+                <Inventory items={items.items} editCartFunc={editCart} />
               </>
             ) : (
               <Error />

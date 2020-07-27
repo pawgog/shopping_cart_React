@@ -15,7 +15,7 @@ const itemEditValues = {
   description: '',
 };
 
-const DashboardCardList = ({ items, fetchItemsAPIFuncChild, fetchCartAPIFuncChild, editCartFuncChild }) => {
+const DashboardCardList = ({ items, editCartFuncChild }) => {
   const dispatch = useDispatch();
   const removeItemCart = (id) => {
     const result = window.confirm('Would you like to delete item?');
