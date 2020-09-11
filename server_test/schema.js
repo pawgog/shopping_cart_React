@@ -1,30 +1,53 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-let userSchema = new Schema(
+let itemSchema = new Schema(
   {
     name: {
       type: String,
     },
-    tel_number: {
+    price: {
+      type: Number,
+    },
+    description: {
       type: String,
     },
-    email: {
-      type: String,
-    },
-    status: {
-      type: String,
-    },
-    date: {
-      type: String,
-    },
-    bid: {
+    imageUrl: {
       type: String,
     },
   },
   {
-    collection: 'applicants',
+    collection: 'items',
   }
 );
 
-module.exports = mongoose.model('Applicants', userSchema);
+let cartSchema = new Schema(
+  {
+    prod_id: {
+      type: String,
+    },
+    name: {
+      type: String,
+    },
+    price: {
+      type: Number,
+    },
+    description: {
+      type: String,
+    },
+    imageUrl: {
+      type: String,
+    },
+  },
+  {
+    collection: 'cart',
+  }
+);
+
+const items = mongoose.model('Items', itemSchema);
+const cart = mongoose.model('Cart', cartSchema);
+
+module.exports = {
+  items,
+  cart,
+};

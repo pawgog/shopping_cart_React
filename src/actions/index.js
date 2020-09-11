@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const SERVER_URL = 'https://shoping-cart-342.herokuapp.com'
+const SERVER_URL = 'https://shoping-cart-342.herokuapp.com';
 
 export const FETCH_ITEMS_PENDING = 'FETCH_ITEMS_PENDING';
 export const FETCH_ITEMS_SUCCESS = 'FETCH_ITEMS_SUCCESS';
@@ -68,10 +68,10 @@ export const editItem = (id, item) => {
         dispatch(editItemSuccess(payloadValue));
       })
       .then(() => {
-        dispatch(fetchItems())
+        dispatch(fetchItems());
       })
       .then(() => {
-        dispatch(fetchCart())
+        dispatch(fetchCart());
       })
       .catch((err) => {
         console.log(err);
@@ -214,10 +214,10 @@ export const editCart = (id, cart) => {
         dispatch(editCartSuccess(payloadValue));
       })
       .then(() => {
-        dispatch(fetchItems())
+        dispatch(fetchItems());
       })
       .then(() => {
-        dispatch(fetchCart())
+        dispatch(fetchCart());
       })
       .catch((err) => {
         console.log(err);
